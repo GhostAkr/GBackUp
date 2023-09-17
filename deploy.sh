@@ -1,0 +1,7 @@
+readonly GBACKUP_SCRIPT=gbackup.sh
+readonly OS_INTERACTION_FOLDER=os_interaction
+
+readonly SCRIPT_TARGET_PATH=/Users/ghostakr/Scripts/
+
+cp $GBACKUP_SCRIPT $SCRIPT_TARGET_PATH
+cp -R $OS_INTERACTION_FOLDER $SCRIPT_TARGET_PATH
