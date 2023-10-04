@@ -1,0 +1,26 @@
+{
+	"drives": [
+		{
+			"name": "GAFlash",
+			"mapping": [
+				[
+					"/source/path1",
+					"/target/path1"
+				],
+				[
+					"/source/path2",
+					"/target/path2"
+				]
+			]
+		},
+		{
+			"name": "GAElements",
+			"mapping": [
+				[
+					"/source/path",
+					"/target/path"
+				]
+			]
+		}
+	]
+}
