@@ -1,7 +1,8 @@
 /**
  * Runs system dialog allowing user to choose "Yes" or "No".
  * @param {} argv Text which should be displayed on the dialog.
- * @returns {string} "YES" if "Yes" has been chosen, "NO" otherwise.
+ * @returns {string} "YES" if "Yes" has been chosen, "NO" if "No" has been chosen,
+ *                   "UNKNOWN" otherwise.
  */
 function run(argv)
 {
@@ -10,6 +11,7 @@ function run(argv)
 
     dlg_res = app.displayDialog(argv,
     {
+        withIcon: "note",
         buttons: ["No", "Yes"],
         defaultButton: "No"
     })
