@@ -6,6 +6,14 @@ readonly RES_FILE_PATH=~/Desktop
 readonly SCRIPT_PATH=$(dirname $(realpath $0))
 readonly OS_INTERACTIONS_PATH=$SCRIPT_PATH/os_interaction
 
+# Logging
+readonly LOG_TAG=[GBackUpApp]
+
+log_info () {
+    local log_info_tag=[INFO]
+    logger -is -t ${LOG_TAG} "${LOG_TAG}${log_info_tag} $1"
+}
+
 # TODO: Execute only when an external drive with specific name is mounted
 # if [[ ${mount | awk '$3 == "/Volumes/${EXT_VOL_NAME}" {print $3}'} != "" ]];
 if true;
@@ -16,15 +24,15 @@ then
 
     case ${res} in
         YES)
-            res_file_name="yes.answer"
+            res_log_msg="yes.answer"
             ;;
         NO)
-            res_file_name="no.answer"
+            res_log_msg="no.answer"
             ;;
         *)
-            res_file_name="unknown.answer"
+            res_log_msg="unknown.answer"
             ;;
     esac
 
-    touch ${RES_FILE_PATH}/${res_file_name}
+    log_info ${res_log_msg}
 fi
