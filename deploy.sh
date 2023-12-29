@@ -1,6 +1,6 @@
 # == Global paths ==
 
-readonly GBACKUP_SCRIPT="gbackup.sh"
+readonly GBACKUP_SCRIPT="shell/gbackup.sh"
 readonly SERVICE="local.ghostakr.gbackup.plist"
 
 readonly SCRIPT_TARGET_PATH="${HOME}/Scripts"
