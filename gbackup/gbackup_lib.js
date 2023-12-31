@@ -39,6 +39,29 @@ function showDialog(text)
 }
 
 /**
+ * Shows GBackUp app drop list with given items.
+ * @param {string} items Items to be shown in the drop list. Items are represented as a 
+ * string separated by ",".
+ * @returns {string|boolean} Selected item, false boolean if no drive is selected.
+ */
+function showDropList(items)
+{
+    let app = Application.currentApplication()
+    app.includeStandardAdditions = true
+
+    let appName = "GBackUp"
+
+    let itemsList = items.split(",")
+
+    var chosenItem = app.chooseFromList(itemsList, {
+        withTitle: appName,
+        withPrompt: "Select a drive which backup should be done to:"
+    })
+
+    return chosenItem
+}
+
+/**
  * Obtains a list of drives monuted in the system. "Mounted" drives are the ones located at
  * /Volumes.
  * @returns {string} List of mounted drives, "FALSE" if no drive is mounted.
