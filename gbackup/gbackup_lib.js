@@ -17,8 +17,9 @@ function showNotification(text)
 }
 
 /**
- * Shows GBackUp app dialog with given text.
+ * Shows GBackUp app dialog with given text. Possible buttons are "Yes" and "No".
  * @param {string} text Text to display on the dialog.
+ * @returns {string} User's answer: "Yes" or "No".
  */
 function showDialog(text)
 {
