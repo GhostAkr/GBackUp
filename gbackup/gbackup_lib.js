@@ -27,7 +27,16 @@ function getMountedDrives()
     app.includeStandardAdditions = true
 
     let cmd = "mount | awk '$3 ~ \"^/Volumes/.*\" {print($3)}'"
-    let res = app.doShellScript(cmd)
+
+    let falseRet = "FALSE"
+    try
+    {
+        var res = app.doShellScript(cmd)
+    }
+    catch
+    {
+        return falseRet
+    }
     
-    return res
+    return (res == "" ? falseRet : res)
 }
