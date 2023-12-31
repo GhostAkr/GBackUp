@@ -17,6 +17,28 @@ function showNotification(text)
 }
 
 /**
+ * Shows GBackUp app dialog with given text.
+ * @param {string} text Text to display on the dialog.
+ */
+function showDialog(text)
+{
+    let app = Application.currentApplication()
+    app.includeStandardAdditions = true
+
+    let appName = "GBackUp"
+
+    dlg_res = app.displayDialog(text,
+    {
+        withTitle: appName,
+        withIcon: "note",
+        buttons: ["No", "Yes"],
+        defaultButton: "No"
+    })
+
+    return dlg_res.buttonReturned
+}
+
+/**
  * Obtains a list of drives monuted in the system. "Mounted" drives are the ones located at
  * /Volumes.
  * @returns {string} List of mounted drives, "FALSE" if no drive is mounted.
