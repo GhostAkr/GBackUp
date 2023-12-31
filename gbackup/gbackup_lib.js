@@ -43,8 +43,9 @@ function getMountedDrives()
 
 /**
  * Compares the list of given drives with the config.
- * @param {string} drives List of drives to be compared in form of string separated with
- * @returns {string} List of matched drives, "FALSE" if no drive is matched.
+ * @param {string} drives List of drives to be compared in form of string separated by "\r".
+ * @returns {string} List of matched drives in form of string separated by ",", "FALSE" if 
+ * no drive is matched.
  */
 function searchForDrive(drives)
 {
