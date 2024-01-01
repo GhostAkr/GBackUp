@@ -77,7 +77,9 @@ function getMountedDrives()
     let falseRet = "FALSE"
     try
     {
-        var res = app.doShellScript(cmd)
+        var res = app.doShellScript(cmd, {
+            alteringLineEndings: false
+        })
     }
     catch
     {
