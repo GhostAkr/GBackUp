@@ -109,7 +109,10 @@ function searchForDrive(drives)
         let configStr = app.read(Path(configPath))
         let config = JSON.parse(configStr)
 
-        let drivesList = drives.toString().split(/\n/)
+        // Number of splits: path to drive usually has only 2 parts (e.g. /Volumes/drive1)
+        let splitsCnt = 2
+
+        let drivesList = drives.toString().split(/\n/, splitsCnt)
         for (let ix = 0; ix < drivesList.length; ix++)
             drivesList[ix] = drivesList[ix].split("/")[2]
 
