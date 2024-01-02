@@ -109,12 +109,13 @@ function searchForDrive(drives)
         let configStr = app.read(Path(configPath))
         let config = JSON.parse(configStr)
 
-        // Number of splits: path to drive usually has only 2 parts (e.g. /Volumes/drive1)
-        let splitsCnt = 2
-
-        let drivesList = drives.toString().split(/\n/, splitsCnt)
+        let drivesList = drives.toString().split(/\n/)
         for (let ix = 0; ix < drivesList.length; ix++)
             drivesList[ix] = drivesList[ix].split("/")[2]
+
+        // Case when initial drives ends with "\n"
+        if (drivesList[drivesList.length - 1] === undefined)
+            drivesList.pop()
 
         let resDrives = []
         drivesList.forEach(driveToCheck => {
