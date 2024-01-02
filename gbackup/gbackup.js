@@ -42,14 +42,46 @@ function unsetProgressBar()
  */
 function run(argv)
 {
-    let gbackup_lib = Library("gbackup_lib.js")
-    gbackup_lib.showNotification("Test")
+    let gbackupUtils = Library("gbackup_lib.js")
 
-    let stepsCount = 10
-    setProgressBar(stepsCount)
-    for (let i = 0; i < stepsCount; i++)
+    let proceedMsg = "Backup drive is mounted. Do you want to proceed with backup?"
+    let proceed = gbackupUtils.showDialog(proceedMsg)
+    if (proceed == "No")
+        return
+
+    // Check mounted drives one more time since it is possible that suitable drives were
+    // unmounted while waiting for user's input
+    let mountedDrives = gbackupUtils.getMountedDrives()
+    let backupDrives = gbackupUtils.searchForDrive(mountedDrives)
+    if (backupDrives == "FALSE")
     {
-        updateProgressBar(i + 1)
+        let allUnmountedMsg = "All backup drives were unmounted. Closing the app"
+        gbackupUtils.showNotification(allUnmountedMsg)
+        return
+    }
+
+    let chosenDrive = gbackupUtils.showDropList(backupDrives)
+    if (chosenDrive == false)
+        return
+
+    // Check if selected drive is still mounted
+    let driveRawName = `/Volumes/${chosenDrive}`.toLowerCase()
+    mountedDrives = gbackupUtils.getMountedDrives()
+    if (!(mountedDrives.toLowerCase().includes(driveRawName)))
+    {
+        let selectedUnmountedMsg = "Selected drive was unmounted. Closing the app"
+        gbackupUtils.showNotification(selectedUnmountedMsg)
+        return
+    }
+
+    let backupStartedMsg = `Starting backup to ${chosenDrive}`
+    gbackupUtils.showNotification(backupStartedMsg)
+
+    // TODO: Do backup
+    setProgressBar(10)
+    for (let i = 0; i < 10; i++)
+    {
+        updateProgressBar(i)
         delay(1)
     }
     unsetProgressBar()
