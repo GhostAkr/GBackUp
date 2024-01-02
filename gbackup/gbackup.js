@@ -19,7 +19,7 @@ function setProgressBar(stepsCount)
  */
 function updateProgressBar(currentStep)
 {
-    Progress.additionalDescription = "Processing " + currentStep + " out of " + 
+    Progress.additionalDescription = "Processing " + currentStep + " of " + 
         Progress.totalUnitCount
 
     Progress.completedUnitCount = currentStep
@@ -41,10 +41,10 @@ function unsetProgressBar()
  * @param {string} from Folder that should be backed up.
  * @param {string} to Backup destination folder.
  */
-function backup(from, to)
+function backupItem(from, to)
 {
     let gbackupUtils = Library("gbackup_lib.js")
-    let cmd = `rsync -a "${from}" "${to}"`
+    let cmd = `rsync -a --delete "${from}" "${to}"`
 
     try
     {
@@ -54,6 +54,53 @@ function backup(from, to)
     {
         let errorMsg = `Error while backing up ${from}`
         gbackupUtils.showNotification(errorMsg)
+    }
+}
+
+/**
+ * Backs up all items specified in the config.
+ * @param {string} driveName Name of target backup drive.
+ */
+function backupAll(driveName)
+{
+    try
+    {
+        const libraryPath = app.pathTo("library folder", { from: "user domain" }).toString()
+        const configPath = String(`${libraryPath}/Preferences/GBackUp/config.json`)
+
+        let configStr = app.read(Path(configPath))
+        let config = JSON.parse(configStr)
+
+        let mapping = []
+        config.drives.forEach(drive => {
+            if (drive.name.localeCompare(driveName, undefined,
+                {sensitivity: "base"}) != 0
+            ){
+                return
+            }
+
+            mapping = drive.mapping            
+        });
+
+        let itemsCnt = mapping.length
+        setProgressBar(itemsCnt)
+
+        let itemNum = 0
+        mapping.forEach(backupPair => {
+            let from = backupPair[0]
+            let to = `/Volumes/${driveName}${backupPair[1]}`
+
+            itemNum++;
+            updateProgressBar(itemNum)
+
+            backupItem(from, to)
+        })
+
+        unsetProgressBar()
+    }
+    catch
+    {
+        // Eat exceptions
     }
 }
 
@@ -98,12 +145,8 @@ function run(argv)
     let backupStartedMsg = `Starting backup to ${chosenDrive}`
     gbackupUtils.showNotification(backupStartedMsg)
 
-    // TODO: Do backup
-    setProgressBar(10)
-    for (let i = 0; i < 10; i++)
-    {
-        updateProgressBar(i)
-        delay(1)
-    }
-    unsetProgressBar()
+    backupAll(chosenDrive)
+
+    let backupFinishedMsg = `Backup to ${chosenDrive} is complete`
+    gbackupUtils.showNotification(backupFinishedMsg)
 }
