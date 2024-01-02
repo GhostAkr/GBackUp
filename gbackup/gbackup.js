@@ -37,6 +37,27 @@ function unsetProgressBar()
 }
 
 /**
+ * Backs up the given folder to the given destination.
+ * @param {string} from Folder that should be backed up.
+ * @param {string} to Backup destination folder.
+ */
+function backup(from, to)
+{
+    let gbackupUtils = Library("gbackup_lib.js")
+    let cmd = `rsync -a "${from}" "${to}"`
+
+    try
+    {
+        app.doShellScript(cmd)
+    }
+    catch
+    {
+        let errorMsg = `Error while backing up ${from}`
+        gbackupUtils.showNotification(errorMsg)
+    }
+}
+
+/**
  * GBackUp App entry point.
  * @param {} argv Ignored.
  */
