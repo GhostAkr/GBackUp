@@ -1,6 +1,7 @@
 # == Global paths ==
 
-readonly GBACKUP_SCRIPT="shell/gbackup.sh"
+readonly SHELL="shell/"
+
 readonly SERVICE="local.ghostakr.gbackup.plist"
 readonly LIBRARY="gbackup/gbackup_lib.js"
 
@@ -10,15 +11,15 @@ readonly LIBRARY_TARGET_PATH="${HOME}/Library/Script Libraries"
 
 # == Deploy services ==
 
-cp ${SERVICE} ${SERVICE_TARGET_PATH}
+cp -a ${SERVICE} ${SERVICE_TARGET_PATH}
 
 # == Deploy shell scripts ==
 
-cp ${GBACKUP_SCRIPT} ${SCRIPT_TARGET_PATH}
+cp -a ${SHELL} ${SCRIPT_TARGET_PATH}
 
 # == Deploy library ==
 
-cp ${LIBRARY} "${LIBRARY_TARGET_PATH}"
+cp -a ${LIBRARY} "${LIBRARY_TARGET_PATH}"
 
 # == Load services ==
 
