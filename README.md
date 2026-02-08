@@ -11,6 +11,8 @@ First, deploy Mac OS service which will react on external drive mounting.
 according to the home path in `deploy.sh`. `gbackup.sh` should be located at `~/Scripts`.
 3. Run `deploy.sh`.
 
+Once the service is deployed, copy the `GBackUp.app` file to the Applications folder.
+
 ## Debugging
 
 To debug GBackUp app copy the code from `gbackup.js` to a Script Editor in Mac OS. Then compile the application.
